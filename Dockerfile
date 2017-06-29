@@ -1,13 +1,14 @@
 FROM hypriot/rpi-node:7.6.0
 
-ONBUILD ADD package.json /tmp/package.json
-ONBUILD RUN cd /tmp && npm install
+ADD package.json /tmp/package.json
+RUN cd /tmp && npm install
 
-ONBUILD RUN mkdir -p /usr/src/app && cp -a /tmp/node_modules /usr/src/app
-ONBUILD WORKDIR /usr/src/app
+RUN mkdir -p /usr/src/app && cp -a /tmp/node_modules /usr/src/app
 
-ONBUILD COPY package.json /usr/src/app/
-ONBUILD COPY . /usr/src/app
+COPY package.json /usr/src/app/
+COPY . /usr/src/app
+
+WORKDIR /usr/src/app
 
 CMD [ "npm", "start" ]
 
